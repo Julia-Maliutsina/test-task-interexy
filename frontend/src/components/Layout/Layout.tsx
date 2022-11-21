@@ -13,7 +13,7 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ pagename, children }) => (
   <div>
     <Menu pagename={pagename} />
-    <Box>{children}</Box>
+    <Box className="page-content">{children}</Box>
   </div>
 );
 

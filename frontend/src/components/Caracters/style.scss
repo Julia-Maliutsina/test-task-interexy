@@ -1,0 +1,71 @@
+.caracter-card {
+  border-radius: 10px;
+  overflow: hidden;
+  height: 250px;
+
+  &.MuiCard-root {
+    background-color: rgb(60, 62, 68);
+    color: var(--text-color);
+  }
+
+  &:hover {
+    color: var(--focus-color);
+    cursor: pointer;
+  }
+
+  .caracter-card-img {
+    &.MuiCardMedia-root {
+      float: left;
+      height: 250px;
+      overflow: hidden;
+      margin-right: 10px;
+      width: fit-content;
+    }
+  }
+  .caracter-card-content {
+    &.MuiCardContent-root {
+      padding: 10px;
+      color: inherit;
+    }
+
+    .caracter-name {
+      color: inherit;
+      &.MuiTypography-root {
+        font-size: 26px;
+        font-family: 'Kanit-SemiBold', sans-serif;
+      }
+    }
+    .caracter-status {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .status-icon {
+        font-size: 14px;
+        margin-left: -1px;
+        &.MuiSvgIcon-colorPrimary {
+          color: rgb(14, 237, 14);
+        }
+        &.MuiSvgIcon-colorSecondary {
+          color: rgb(237, 14, 14);
+        }
+        &.MuiSvgIcon-colorDisabled {
+          color: rgb(210, 210, 210);
+        }
+      }
+      color: var(--text-color);
+      font-size: 18px;
+      font-family: 'Kanit', sans-serif;
+    }
+    .caracter-title {
+      color: var(--secondary-text-color);
+      font-size: 18px;
+      font-family: 'Kanit', sans-serif;
+      margin-top: 10px;
+    }
+    .caracter-info {
+      color: var(--text-color);
+      font-size: 18px;
+      font-family: 'Kanit-ExtraLight', sans-serif;
+    }
+  }
+}

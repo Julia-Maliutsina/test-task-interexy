@@ -1,0 +1,16 @@
+.caracters-grid {
+  &.MuiGrid-root {
+    margin: 0;
+    padding: 0;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .caracters-grid-item {
+    &.MuiGrid-item {
+      box-sizing: border-box;
+      padding: 10px;
+    }
+  }
+}

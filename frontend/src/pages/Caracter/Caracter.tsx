@@ -1,6 +1,5 @@
 import React from 'react';
 import { FC } from 'react';
-import { Box } from '@mui/material';
 
 import Layout from '../../components/Layout';
 import './style.scss';
@@ -26,10 +25,6 @@ interface CaracterProps {
   created?: Date;
 }
 
-const CaracterPage: FC = () => (
-  <Layout pagename="caracter">
-    <Box>Caracter</Box>
-  </Layout>
-);
+const CaracterPage: FC = () => <Layout pagename="caracter">Caracter</Layout>;
 
 export default CaracterPage;

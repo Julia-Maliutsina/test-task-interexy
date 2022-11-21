@@ -1,16 +1,69 @@
-$menu-height: 60px;
-$actions-color: white;
-$headers-font-size: 20px;
+header {
+  &.MuiAppBar-root {
+    background-color: var(--menu-background-color);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
 
-.navLinks {
+.nav-links {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  .navLink {
-    font-size: $headers-font-size;
+
+  .nav-link {
+    font-family: 'Kanit-Medium', sans-serif;
+    font-size: var(--headers-font-size);
     text-align: center;
-    height: $menu-height;
-    color: $actions-color;
+    height: var(--menu-height);
+    color: var(--menu-text-color);
     padding: 20px;
+    line-height: var(--headers-font-size);
+    &:hover {
+      color: var(--focus-color);
+    }
+  }
+}
+
+.sign-in {
+  &.MuiBox-root {
+    height: var(--menu-height);
+    padding: 15px;
+  }
+
+  .sign-in-button {
+    &.MuiButton-root {
+      height: 100%;
+      border: 1px solid var(--focus-color);
+      border-radius: 8px;
+      font-family: 'Kanit', sans-serif;
+      color: var(--menu-text-color);
+      &:hover {
+        background-color: var(--focus-color);
+        color: var(--text-color);
+      }
+    }
+  }
+
+  .sign-up-button {
+    &.MuiButton-root {
+      height: 100%;
+      margin-left: 10px;
+      font-family: 'Kanit', sans-serif;
+      color: var(--secondary-text-color);
+      &:hover {
+        text-decoration: underline;
+        color: var(--focus-color);
+      }
+    }
+  }
+}
+
+.page-content {
+  &.MuiBox-root {
+    background-color: var(--main-background-color);
+    height: calc(100vh - var(--menu-height));
+    padding-top: 80px;
   }
 }
