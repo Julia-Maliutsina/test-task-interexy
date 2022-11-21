@@ -1,0 +1,16 @@
+$menu-height: 60px;
+$actions-color: white;
+$headers-font-size: 20px;
+
+.navLinks {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  .navLink {
+    font-size: $headers-font-size;
+    text-align: center;
+    height: $menu-height;
+    color: $actions-color;
+    padding: 20px;
+  }
+}
