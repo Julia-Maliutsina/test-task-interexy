@@ -1,4 +1,4 @@
-.caracter-info {
+.character-info {
   padding: 0 30px;
 
   .avatar {
@@ -21,9 +21,9 @@
   }
 
   .info-wrapper {
-    width: 50%;
+    width: fit-content;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
 
     .main-info {
       margin-right: 20px;
@@ -51,6 +51,7 @@
     }
 
     .location-info {
+      margin-left: 40px;
       .title {
         background-color: var(--text-color);
         border-radius: 8px;

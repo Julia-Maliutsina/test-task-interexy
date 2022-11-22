@@ -11,11 +11,27 @@ export interface CounterState {
 const emptyCharacter = {} as ICharacter;
 
 export const fetchAllCharacters = createAsyncThunk(
-  'caracters/fetchAll',
+  'characters/fetchAll',
   async (page: Number, { rejectWithValue }) => {
     try {
-      let fetchAPI = store.getState();
-      const response = await fetch(fetchAPI.charactersReducer.fetchNext);
+      const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page || 1}`);
+      if (response.ok) {
+        return response.json();
+      } else {
+        return rejectWithValue('No caracters found');
+      }
+    } catch (e) {
+      const message = <{ message: string }>e;
+      return rejectWithValue(message);
+    }
+  },
+);
+
+export const fetchOneCharacter = createAsyncThunk(
+  'characters/fetchOne',
+  async (characterId: String, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`https://rickandmortyapi.com/api/character/${characterId}`);
       if (response.ok) {
         return response.json();
       } else {
@@ -29,12 +45,12 @@ export const fetchAllCharacters = createAsyncThunk(
 );
 
 export const charactersSlice = createSlice({
-  name: 'caracters',
+  name: 'characters',
   initialState: {
     characters: [] as ICharacter[],
+    pages: 0,
     character: emptyCharacter,
     isLoading: false,
-    fetchNext: 'https://rickandmortyapi.com/api/character?page=1',
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -44,24 +60,23 @@ export const charactersSlice = createSlice({
       })
       .addCase(fetchAllCharacters.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
-        const newCharacters = state.characters.concat(action.payload.results);
-        state.characters = newCharacters;
-        state.fetchNext = action.payload.info.next;
+        state.characters = action.payload.results;
+        state.pages = action.payload.info.pages;
       })
       .addCase(fetchAllCharacters.rejected, (state: any) => {
         state.isLoading = false;
-      });
-    /*       .addCase(fetchSOneCaracter.pending, (state: any) => {
+      })
+      .addCase(fetchOneCharacter.pending, (state: any) => {
         state.isLoading = true;
       })
-      .addCase(fetchSOneCaracter.fullfilled, (state: any, action: any) => {
+      .addCase(fetchOneCharacter.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
-        state.caracter = action.payload.body;
+        state.character = action.payload;
       })
-      .addCase(fetchSOneCaracter.rejected, (state: any) => {
+      .addCase(fetchOneCharacter.rejected, (state: any) => {
         state.isLoading = false;
-        state.caracter = emptyCaracter;
-      }); */
+        state.character = emptyCharacter;
+      });
   },
 });
 

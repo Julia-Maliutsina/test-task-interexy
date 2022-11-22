@@ -17,7 +17,7 @@ const CharacterInfo: FC<ICharacter> = ({
 }) => (
   <Box className="character-info">
     <Paper className="avatar">
-      <img src={`${image}`} />
+      <img src={`${image}`} alt={`${name}`} />
     </Paper>
     <Typography className="name">{name}</Typography>
     <Box className="info-wrapper">
@@ -28,9 +28,11 @@ const CharacterInfo: FC<ICharacter> = ({
         </Box>
         <Box>
           <Typography className="title">Species:</Typography>
-          <Typography className="info">
-            {species} {type && `- ${type}`}
-          </Typography>
+          <Typography className="info">{species}</Typography>
+        </Box>
+        <Box>
+          <Typography className="title">Type:</Typography>
+          <Typography className="info">{type || 'Unknown'}</Typography>
         </Box>
         <Box>
           <Typography className="title">Gender:</Typography>
@@ -39,9 +41,9 @@ const CharacterInfo: FC<ICharacter> = ({
       </Box>
       <Box className="location-info">
         <Typography className="title">Last known location</Typography>
-        <Typography className="info">{location.name || 'Unknown'}</Typography>
+        <Typography className="info">{location?.name || 'Unknown'}</Typography>
         <Typography className="title">First seen in</Typography>
-        <Typography className="info">{origin.name || 'Unknown'}</Typography>
+        <Typography className="info">{origin?.name || 'Unknown'}</Typography>
       </Box>
     </Box>
   </Box>

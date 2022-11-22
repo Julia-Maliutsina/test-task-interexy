@@ -1,4 +1,7 @@
 .characters-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   &.MuiGrid-root {
     margin: 0;
     padding: 0;
@@ -13,4 +16,21 @@
       padding: 10px;
     }
   }
+}
+
+.characters-pagination {
+  &.MuiPagination-root {
+    width: fit-content;
+    margin: 15px auto;
+  }
+
+  button {
+    &.MuiPaginationItem-root {
+      color: var(--secondary-text-color);
+    }
+  }
+}
+
+.infinite-scroll-component__outerdiv {
+  width: 100%;
 }
