@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FC } from 'react';
 import { Grid } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Layout from '../../components/Layout';
 import './style.scss';
-import { Caracter } from 'interfaces/Caracter';
+import { ICaracter } from 'interfaces/Caracter';
 import { CaracterCard } from 'components/Caracters';
+import { RootState } from 'store/store';
+import { fetchAllCaracters } from 'api/getCaracters';
 
 interface CaractersProps {
-  caracters?: Array<Caracter>;
+  caracters?: Array<ICaracter>;
 }
 
 const DEFAULT_CARACTERS = [
@@ -48,24 +51,33 @@ const DEFAULT_CARACTERS = [
   },
 ];
 
-const CaractersPage: FC<CaractersProps> = () => (
-  <Layout pagename="caracters">
-    <Grid container spacing={2} className="caracters-grid">
-      {DEFAULT_CARACTERS.map((caracter) => (
-        <Grid className="caracters-grid-item" item xs={6} key={caracter.id}>
-          <CaracterCard
-            id={caracter.id}
-            name={caracter.name}
-            status={caracter.status}
-            species={caracter.species}
-            origin={caracter.origin}
-            location={caracter.location}
-            image={caracter.image}
-          />
-        </Grid>
-      ))}
-    </Grid>
-  </Layout>
-);
+const CaractersPage: FC<CaractersProps> = ({}) => {
+  const { isLoading, caracters } = useSelector((state: RootState) => state.caractersReducer);
+  let page = 0;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllCaracters(page));
+  }, [dispatch, page]);
+
+  return (
+    <Layout pagename="caracters">
+      <Grid container spacing={2} className="caracters-grid">
+        {DEFAULT_CARACTERS.map((caracter) => (
+          <Grid className="caracters-grid-item" item xs={6} key={caracter.id}>
+            <CaracterCard
+              id={caracter.id}
+              name={caracter.name}
+              status={caracter.status}
+              species={caracter.species}
+              origin={caracter.origin}
+              location={caracter.location}
+              image={caracter.image}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </Layout>
+  );
+};
 
 export default CaractersPage;

@@ -1,0 +1,73 @@
+.caracter-info {
+  padding: 0 30px;
+
+  .avatar {
+    &.MuiPaper-root {
+      float: left;
+      margin: 0 40px 40px 0;
+      width: fit-content;
+      height: 300px;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 0;
+      text-align: center;
+    }
+  }
+
+  .name {
+    color: var(--focus-color);
+    font-size: 36px;
+    font-family: 'Kanit-SemiBold', sans-serif;
+  }
+
+  .info-wrapper {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+
+    .main-info {
+      margin-right: 20px;
+
+      .title {
+        display: inline-block;
+        margin-right: 10px;
+        font-family: 'Kanit-Medium', sans-serif;
+        color: var(--text-color);
+        font-size: 28px;
+        line-height: 28px;
+      }
+
+      .info {
+        display: inline-block;
+        font-family: 'Kanit-Regular', sans-serif;
+        font-size: 28px;
+        line-height: 28px;
+        color: var(--secondary-text-color);
+      }
+
+      .MuiBox-root {
+        margin-bottom: 15px;
+      }
+    }
+
+    .location-info {
+      .title {
+        background-color: var(--text-color);
+        border-radius: 8px;
+        padding: 5px;
+        color: var(--menu-text-color);
+        font-size: 22px;
+        height: 32px;
+        line-height: 22px;
+        text-align: center;
+      }
+      .info {
+        font-size: 20px;
+        color: var(--focus-color);
+        margin-left: 5px;
+        margin-bottom: 25px;
+        text-align: center;
+      }
+    }
+  }
+}

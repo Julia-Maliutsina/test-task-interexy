@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom';
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
-import { Caracter } from 'interfaces/Caracter';
+import { ICaracter } from 'interfaces/Caracter';
 import './style.scss';
 import { STATUSES } from 'constants/statuses';
 
-const CaracterCard: FC<Caracter> = ({ id, name, status, species, origin, location }) => (
+const CaracterCard: FC<ICaracter> = ({ id, name, status, species, origin, location, image }) => (
   <Card className="caracter-card">
     <Link to={`${id}`}>
       <CardMedia
         className="caracter-card-img"
         component="img"
         height="140"
-        image="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+        image={`${image}`}
         alt="green iguana"
       />
       <CardContent className="caracter-card-content">

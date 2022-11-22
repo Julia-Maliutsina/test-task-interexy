@@ -3,28 +3,41 @@ import { FC } from 'react';
 
 import Layout from '../../components/Layout';
 import './style.scss';
+import { CaracterInfo } from 'components/Caracter';
 
-interface CaracterProps {
-  id: Number;
-  name: String;
-  status: String;
-  species: String;
+const DEFAULT_CARACTER = {
+  id: 1,
+  name: 'Rick Sanchez',
+  status: 'Alive',
+  species: 'Human',
+  type: '',
+  gender: 'Male',
   origin: {
-    name: String;
-    url: String;
-  };
+    name: 'Earth (C-137)',
+    url: 'https://rickandmortyapi.com/api/location/1',
+  },
   location: {
-    name: String;
-    url: String;
-  };
-  episode: Array<string>;
-  url: String;
-  type?: String;
-  gender?: String;
-  image?: String;
-  created?: Date;
-}
+    name: 'Citadel of Ricks',
+    url: 'https://rickandmortyapi.com/api/location/3',
+  },
+  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+};
+const caracter = DEFAULT_CARACTER;
 
-const CaracterPage: FC = () => <Layout pagename="caracter">Caracter</Layout>;
+const CaracterPage: FC = () => (
+  <Layout pagename="caracter">
+    <CaracterInfo
+      id={caracter.id}
+      name={caracter.name}
+      status={caracter.status}
+      species={caracter.species}
+      type={caracter.type}
+      gender={caracter.gender}
+      origin={caracter.origin}
+      location={caracter.location}
+      image={caracter.image}
+    />
+  </Layout>
+);
 
 export default CaracterPage;
