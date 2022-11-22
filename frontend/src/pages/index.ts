@@ -1,2 +1,2 @@
-export { default as Characters } from './Characters';
-export { default as Character } from './Character';
+export { CharactersPage } from './Characters';
+export { CharacterPage } from './Character';

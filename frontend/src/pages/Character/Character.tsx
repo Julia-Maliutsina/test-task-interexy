@@ -1,42 +1,16 @@
-import React, { FC, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
+
+import { CharacterInfo } from 'components/Character';
+import { ICharacter } from 'interfaces/Character';
 
 import Layout from '../../components/Layout';
 import './style.scss';
-import { CharacterInfo } from 'components/Character';
-import { fetchOneCharacter } from 'store/charactersSlice';
-import { RootState, useAppDispatch } from 'store/store';
+interface ICharacterProps {
+  character: ICharacter;
+  isLoading?: Boolean;
+}
 
-const DEFAULT_CARACTER = {
-  id: 1,
-  name: 'Rick Sanchez',
-  status: 'Alive',
-  species: 'Human',
-  type: '',
-  gender: 'Male',
-  origin: {
-    name: 'Earth (C-137)',
-    url: 'https://rickandmortyapi.com/api/location/1',
-  },
-  location: {
-    name: 'Citadel of Ricks',
-    url: 'https://rickandmortyapi.com/api/location/3',
-  },
-  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-};
-
-const CharacterPage: FC = () => {
-  const { isLoading, character } = useSelector((state: RootState) => state.charactersReducer);
-
-  let { characterId } = useParams();
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    if (characterId) {
-      dispatch(fetchOneCharacter(characterId));
-    }
-  }, [characterId, dispatch]);
-
+const CharacterPage: FC<ICharacterProps> = ({ character, isLoading }) => {
   return (
     <Layout pagename="character">
       {character && (
