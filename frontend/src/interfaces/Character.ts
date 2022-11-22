@@ -1,4 +1,4 @@
-export interface ICaracter {
+export interface ICharacter {
   id: Number;
   name: String;
   status: String;

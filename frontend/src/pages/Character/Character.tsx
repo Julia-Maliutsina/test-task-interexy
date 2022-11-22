@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import Layout from '../../components/Layout';
 import './style.scss';
-import { CaracterInfo } from 'components/Caracter';
+import { CharacterInfo } from 'components/Character';
 
 const DEFAULT_CARACTER = {
   id: 1,
@@ -24,9 +24,9 @@ const DEFAULT_CARACTER = {
 };
 const caracter = DEFAULT_CARACTER;
 
-const CaracterPage: FC = () => (
-  <Layout pagename="caracter">
-    <CaracterInfo
+const CharacterPage: FC = () => (
+  <Layout pagename="character">
+    <CharacterInfo
       id={caracter.id}
       name={caracter.name}
       status={caracter.status}
@@ -40,4 +40,4 @@ const CaracterPage: FC = () => (
   </Layout>
 );
 
-export default CaracterPage;
+export default CharacterPage;

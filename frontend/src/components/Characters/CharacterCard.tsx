@@ -3,23 +3,23 @@ import { Link } from 'react-router-dom';
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
-import { ICaracter } from 'interfaces/Caracter';
+import { ICharacter } from 'interfaces/Character';
 import './style.scss';
 import { STATUSES } from 'constants/statuses';
 
-const CaracterCard: FC<ICaracter> = ({ id, name, status, species, origin, location, image }) => (
-  <Card className="caracter-card">
+const CharacterCard: FC<ICharacter> = ({ id, name, status, species, origin, location, image }) => (
+  <Card className="character-card">
     <Link to={`${id}`}>
       <CardMedia
-        className="caracter-card-img"
+        className="character-card-img"
         component="img"
         height="140"
         image={`${image}`}
         alt="green iguana"
       />
-      <CardContent className="caracter-card-content">
-        <Typography className="caracter-name">{name}</Typography>
-        <Typography className="caracter-status">
+      <CardContent className="character-card-content">
+        <Typography className="character-name">{name}</Typography>
+        <Typography className="character-status">
           <FiberManualRecordIcon
             className="status-icon"
             fontSize="inherit"
@@ -33,13 +33,13 @@ const CaracterCard: FC<ICaracter> = ({ id, name, status, species, origin, locati
           />
           {status} - {species}
         </Typography>
-        <Typography className="caracter-title">Last known location:</Typography>
-        <Typography className="caracter-info">{location.name}</Typography>
-        <Typography className="caracter-title">First seen in:</Typography>
-        <Typography className="caracter-info">{origin.name}</Typography>
+        <Typography className="character-title">Last known location:</Typography>
+        <Typography className="character-info">{location.name}</Typography>
+        <Typography className="character-title">First seen in:</Typography>
+        <Typography className="character-info">{origin.name}</Typography>
       </CardContent>
     </Link>
   </Card>
 );
 
-export default CaracterCard;
+export default CharacterCard;

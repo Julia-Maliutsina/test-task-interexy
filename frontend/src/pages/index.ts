@@ -1,2 +1,2 @@
-export { default as Caracters } from './Caracters';
-export { default as Caracter } from './Caracter';
+export { default as Characters } from './Characters';
+export { default as Character } from './Character';

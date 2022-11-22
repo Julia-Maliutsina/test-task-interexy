@@ -24,6 +24,10 @@ header {
       color: var(--focus-color);
     }
   }
+
+  .selected-nav-link {
+    border-bottom: 2px solid var(--focus-color);
+  }
 }
 
 .sign-in {
@@ -65,5 +69,6 @@ header {
     background-color: var(--main-background-color);
     height: calc(100vh - var(--menu-height));
     padding-top: 80px;
+    overflow-y: auto;
   }
 }

@@ -16,14 +16,17 @@ const Layout: FC<MenuProps> = ({ pagename }) => (
       <Box className="nav-links">
         <div className="nav-link">
           <Link
-            to="/caracters"
-            className={pagename === 'caracters' ? 'selected-nav-link' : 'nav-link'}
+            to="/characters"
+            className={pagename === 'characters' ? 'nav-link selected-nav-link' : 'nav-link'}
           >
-            Caracters
+            Characters
           </Link>
         </div>
         <div className="nav-link">
-          <Link to="/user" className={pagename === 'caracters' ? 'selected-nav-link' : 'nav-link'}>
+          <Link
+            to="/user"
+            className={pagename === 'user' ? 'nav-link selected-nav-link' : 'nav-link'}
+          >
             User Info
           </Link>
         </div>

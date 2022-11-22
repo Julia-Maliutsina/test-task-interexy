@@ -1,10 +1,11 @@
-import { Action, AnyAction, combineReducers, applyMiddleware } from 'redux';
+import { Action, AnyAction, combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { ThunkMiddleware, ThunkAction, ThunkDispatch } from 'redux-thunk';
-import caractersReducer from './caractersSlice';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import charactersReducer from './charactersSlice';
+import { useDispatch } from 'react-redux';
 
 const reducer = combineReducers({
-  caractersReducer,
+  charactersReducer,
 });
 const store = configureStore({ reducer });
 
@@ -16,6 +17,7 @@ export type ThunkType<ReturnType = void> = ThunkAction<
   unknown,
   Action<String>
 >;
-export type Dispatch = ThunkDispatch<RootState, unknown, AnyAction>;
+type TypedDispatch<T> = ThunkDispatch<T, any, AnyAction>;
+export const useAppDispatch = () => useDispatch<TypedDispatch<RootState>>();
 
 export default store;

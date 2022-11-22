@@ -1,21 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ICaracter } from 'interfaces/Caracter';
+import { ICharacter } from 'interfaces/Character';
+import store from './store';
 
 export interface CounterState {
   value: number;
   incrementAmount: number;
 }
 
-const emptyCaracter = {} as ICaracter;
+const emptyCharacter = {} as ICharacter;
 
-export const fetchAllCaracters = createAsyncThunk(
+export const fetchAllCharacters = createAsyncThunk(
   'caracters/fetchAll',
   async (page: Number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/character?${page || 0 + 1}`);
-      if (response.status === 200) {
-        return response.body;
+      let fetchAPI = store.getState();
+      const response = await fetch(fetchAPI.charactersReducer.fetchNext);
+      if (response.ok) {
+        return response.json();
       } else {
         return rejectWithValue('No caracters found');
       }
@@ -26,26 +28,28 @@ export const fetchAllCaracters = createAsyncThunk(
   },
 );
 
-export const caractersSlice = createSlice({
+export const charactersSlice = createSlice({
   name: 'caracters',
   initialState: {
-    caracters: [],
-    caracter: emptyCaracter,
+    characters: [] as ICharacter[],
+    character: emptyCharacter,
     isLoading: false,
+    fetchNext: 'https://rickandmortyapi.com/api/character?page=1',
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllCaracters.pending, (state: any) => {
+      .addCase(fetchAllCharacters.pending, (state: any) => {
         state.isLoading = true;
       })
-      .addCase(fetchAllCaracters.fulfilled, (state: any, action: any) => {
+      .addCase(fetchAllCharacters.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
-        state.caracters = action.payload.body;
+        const newCharacters = state.characters.concat(action.payload.results);
+        state.characters = newCharacters;
+        state.fetchNext = action.payload.info.next;
       })
-      .addCase(fetchAllCaracters.rejected, (state: any) => {
+      .addCase(fetchAllCharacters.rejected, (state: any) => {
         state.isLoading = false;
-        state.caracters = [];
       });
     /*       .addCase(fetchSOneCaracter.pending, (state: any) => {
         state.isLoading = true;
@@ -61,6 +65,6 @@ export const caractersSlice = createSlice({
   },
 });
 
-const caractersReducer = caractersSlice.reducer;
+const charactersReducer = charactersSlice.reducer;
 
-export default caractersReducer;
+export default charactersReducer;

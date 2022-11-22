@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Box, Container, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 
-import { ICaracter } from 'interfaces/Caracter';
+import { ICharacter } from 'interfaces/Character';
 import './style.scss';
 
-const CaracterInfo: FC<ICaracter> = ({
+const CharacterInfo: FC<ICharacter> = ({
   id,
   name,
   status,
@@ -15,7 +15,7 @@ const CaracterInfo: FC<ICaracter> = ({
   location,
   image,
 }) => (
-  <Box className="caracter-info">
+  <Box className="character-info">
     <Paper className="avatar">
       <img src={`${image}`} />
     </Paper>
@@ -47,4 +47,4 @@ const CaracterInfo: FC<ICaracter> = ({
   </Box>
 );
 
-export default CaracterInfo;
+export default CharacterInfo;

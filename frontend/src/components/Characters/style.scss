@@ -1,4 +1,4 @@
-.caracter-card {
+.character-card {
   border-radius: 10px;
   overflow: hidden;
   height: 250px;
@@ -13,7 +13,7 @@
     cursor: pointer;
   }
 
-  .caracter-card-img {
+  .character-card-img {
     &.MuiCardMedia-root {
       float: left;
       height: 250px;
@@ -22,20 +22,20 @@
       width: fit-content;
     }
   }
-  .caracter-card-content {
+  .character-card-content {
     &.MuiCardContent-root {
       padding: 10px;
       color: inherit;
     }
 
-    .caracter-name {
+    .character-name {
       color: inherit;
       &.MuiTypography-root {
         font-size: 26px;
         font-family: 'Kanit-SemiBold', sans-serif;
       }
     }
-    .caracter-status {
+    .character-status {
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -56,13 +56,13 @@
       font-size: 18px;
       font-family: 'Kanit', sans-serif;
     }
-    .caracter-title {
+    .character-title {
       color: var(--secondary-text-color);
       font-size: 18px;
       font-family: 'Kanit', sans-serif;
       margin-top: 10px;
     }
-    .caracter-info {
+    .character-info {
       color: var(--text-color);
       font-size: 18px;
       font-family: 'Kanit-ExtraLight', sans-serif;
