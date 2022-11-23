@@ -8,13 +8,11 @@ export interface CounterState {
   incrementAmount: number;
 }
 
-const caracters_api = process.env.RICK_AND_MORTY_ENDPOINT;
-
 export const fetchAllCharacters = createAsyncThunk(
   'characters/fetchAll',
   async (page: Number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${caracters_api}?page=${page || 1}`);
+      const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page || 1}`);
       if (response.ok) {
         return response.json();
       } else {
@@ -38,7 +36,7 @@ export const fetchOneCharacter = createAsyncThunk(
   'characters/fetchOne',
   async (characterId: String, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${caracters_api}/${characterId}`);
+      const response = await fetch(`https://rickandmortyapi.com/api/character/${characterId}`);
       if (response.ok) {
         return response.json();
       } else {

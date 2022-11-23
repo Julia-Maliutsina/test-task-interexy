@@ -2,14 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IRegister, IAuth } from 'interfaces/User';
 
-const user_api = process.env.LOCAL_USERS_ENDPOINT;
-
 export const authorizeUser = createAsyncThunk(
   'auth/signin',
   async (params: IAuth, { rejectWithValue }) => {
     try {
       const requestBody = { email: params.email, password: params.password };
-      const response = await fetch(`${user_api}/signin`, {
+      const response = await fetch(`http://localhost:4000/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +43,7 @@ export const registerUser = createAsyncThunk(
         gender: params.gender,
         password: params.password,
       });
-      const response = await fetch(`${user_api}/signup`, {
+      const response = await fetch(`http://localhost:4000/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
