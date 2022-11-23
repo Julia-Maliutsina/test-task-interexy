@@ -2,10 +2,14 @@ import { Action, AnyAction, combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import charactersReducer from './charactersSlice';
+import authReducer from './authSlice';
+import userReducer from './userSlice';
 import { useDispatch } from 'react-redux';
 
 const reducer = combineReducers({
   charactersReducer,
+  authReducer,
+  userReducer,
 });
 const store = configureStore({ reducer });
 

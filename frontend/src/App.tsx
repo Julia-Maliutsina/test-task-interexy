@@ -5,7 +5,7 @@ import { Provider as ReduxStoreProvider } from 'react-redux';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.scss';
-import { CharactersPage, CharacterPage } from './pages';
+import { CharactersPage, CharacterPage, UserPage } from './pages';
 
 const App: FC = () => (
   <ReduxStoreProvider store={reduxStore}>
@@ -16,6 +16,7 @@ const App: FC = () => (
           <Route index element={<CharactersPage />} />
           <Route path=":characterId" element={<CharacterPage />} />
         </Route>
+        <Route path="/user" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   </ReduxStoreProvider>

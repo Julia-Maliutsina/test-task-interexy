@@ -4,26 +4,21 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { validateSignUp } from 'utils/validation';
 import { INITIAL_REG_VALUES, REG_PLACEHOLDERS } from 'constants/forms';
+import { IRegister } from 'interfaces/User';
 
 import '../style.scss';
 
 interface ISignUpProps {
   open: boolean;
   handleSignUpOpen: (isOpen: boolean) => void;
+  submitSignUp: (values: IRegister) => void;
 }
 
-const SignUp: FC<ISignUpProps> = ({ open, handleSignUpOpen }) => (
+const SignUp: FC<ISignUpProps> = ({ open, handleSignUpOpen, submitSignUp }) => (
   <Dialog open={open} onClose={() => handleSignUpOpen(false)}>
     <DialogTitle className="dialog-title">Sign Up</DialogTitle>
     <DialogContent className="dialog-content">
-      <Formik
-        initialValues={INITIAL_REG_VALUES}
-        onSubmit={(values) => {
-          console.log('submitRegistration', values);
-          handleSignUpOpen(false);
-        }}
-        validate={validateSignUp}
-      >
+      <Formik initialValues={INITIAL_REG_VALUES} onSubmit={submitSignUp} validate={validateSignUp}>
         <Form>
           <div>
             <label htmlFor="name">First name</label>
@@ -47,9 +42,27 @@ const SignUp: FC<ISignUpProps> = ({ open, handleSignUpOpen }) => (
             </ErrorMessage>
           </div>
           <div>
-            <label htmlFor="birthday">Date of birth</label>
-            <Field type="date" id="birthday" name="birthday" />
-            <ErrorMessage name="birthday">
+            <label htmlFor="birth">Date of birth</label>
+            <Field type="date" id="birth" name="birth" />
+            <ErrorMessage name="birth">
+              {(ErrorText) => <div className="error">{ErrorText}</div>}
+            </ErrorMessage>
+          </div>
+          <div>
+            <label htmlFor="gender">Gender</label>
+            <Field as="select" type="gender" id="gender" name="gender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="non-conforming">Non-conforming</option>
+            </Field>
+            <ErrorMessage name="gender">
+              {(ErrorText) => <div className="error">{ErrorText}</div>}
+            </ErrorMessage>
+          </div>
+          <div>
+            <label htmlFor="location">City</label>
+            <Field type="location" id="location" name="location" />
+            <ErrorMessage name="location">
               {(ErrorText) => <div className="error">{ErrorText}</div>}
             </ErrorMessage>
           </div>

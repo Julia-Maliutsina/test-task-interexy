@@ -1,13 +1,26 @@
-export interface ISignUpForm {
+export interface IRegister {
   name: string;
   surname: string;
   email: string;
   password: string;
   passwordConfirm: string;
-  birthday: string;
+  birth: string;
+  gender: string;
+  location: string;
 }
 
-export interface ISignInForm {
+export interface IAuth {
   email: string;
   password: string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+  birth: string;
+  gender: string;
+  location: string;
+  createdAt: Date;
 }

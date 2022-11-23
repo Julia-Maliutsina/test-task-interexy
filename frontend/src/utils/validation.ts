@@ -1,15 +1,16 @@
-import { ISignUpForm, ISignInForm } from 'interfaces/User';
+import { IRegister, IAuth } from 'interfaces/User';
 
 interface IErrors {
   email: string;
   name: string;
   surname: string;
-  birthday: string;
+  birth: string;
+  location: string;
   password: string;
   passwordConfirm: string;
 }
 
-const validateSignUp = (values: ISignUpForm) => {
+const validateSignUp = (values: IRegister) => {
   let errors = {} as IErrors;
   if (!values.email) {
     errors.email = '*Required';
@@ -28,8 +29,11 @@ const validateSignUp = (values: ISignUpForm) => {
   } else if (!/^[a-zA-Z\s-]*$/.test(values.surname)) {
     errors.surname = '*Enter last name in English';
   }
-  if (!values.birthday) {
-    errors.birthday = '*Required';
+  if (!values.birth) {
+    errors.birth = '*Required';
+  }
+  if (!/^[a-zA-Z\s-]*$/.test(values.location)) {
+    errors.location = '*Enter your location in English';
   }
   if (!values.password) {
     errors.password = '*Required';
@@ -44,7 +48,7 @@ const validateSignUp = (values: ISignUpForm) => {
   return errors;
 };
 
-const validateSignIn = (values: ISignInForm) => {
+const validateSignIn = (values: IAuth) => {
   let errors = {} as IErrors;
   if (!values.email) {
     errors.email = '*Required';

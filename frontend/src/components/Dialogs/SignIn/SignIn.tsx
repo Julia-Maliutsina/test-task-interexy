@@ -4,26 +4,21 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { validateSignIn } from 'utils/validation';
 import { INITIAL_AUTH_VALUES } from 'constants/forms';
+import { IAuth } from 'interfaces/User';
 
 import '../style.scss';
 
 interface ISignInProps {
   open: boolean;
   handleSignInOpen: (isOpen: boolean) => void;
+  submitSignIn: (values: IAuth) => void;
 }
 
-const SignIn: FC<ISignInProps> = ({ open, handleSignInOpen }) => (
+const SignIn: FC<ISignInProps> = ({ open, handleSignInOpen, submitSignIn }) => (
   <Dialog open={open} onClose={() => handleSignInOpen(false)}>
     <DialogTitle className="dialog-title">Sign In</DialogTitle>
     <DialogContent className="dialog-content">
-      <Formik
-        initialValues={INITIAL_AUTH_VALUES}
-        onSubmit={(values) => {
-          console.log('submitAuthorization', values);
-          handleSignInOpen(false);
-        }}
-        validate={validateSignIn}
-      >
+      <Formik initialValues={INITIAL_AUTH_VALUES} onSubmit={submitSignIn} validate={validateSignIn}>
         <Form>
           <div className="sign-in-input">
             <label htmlFor="email">Email</label>

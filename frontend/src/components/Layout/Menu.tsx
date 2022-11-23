@@ -3,17 +3,25 @@ import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { useSelector } from 'react-redux';
 
+import { authorizeUser, registerUser } from 'store/authSlice';
+import { RootState, useAppDispatch } from 'store/store';
 import { SignUp, SignIn } from 'components/Dialogs';
+import { IAuth, IRegister } from 'interfaces/User';
 
 interface MenuProps {
   pagename: string;
   children?: React.ReactNode;
 }
 
-const Layout: FC<MenuProps> = ({ pagename }) => {
+const Menu: FC<MenuProps> = ({ pagename }) => {
   const [signInOpen, setSignInOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
+
+  const { currentUser } = useSelector((state: RootState) => state.authReducer);
+
+  const dispatch = useAppDispatch();
 
   const handleSignInOpen = (isOpen: boolean) => {
     setSignInOpen(isOpen);
@@ -21,6 +29,16 @@ const Layout: FC<MenuProps> = ({ pagename }) => {
 
   const handleSignUpOpen = (isOpen: boolean) => {
     setSignUpOpen(isOpen);
+  };
+
+  const submitSignIn = (values: IAuth) => {
+    dispatch(authorizeUser(values));
+    handleSignInOpen(false);
+  };
+
+  const submitSignUp = (values: IRegister) => {
+    dispatch(registerUser(values));
+    handleSignUpOpen(false);
   };
 
   return (
@@ -35,14 +53,16 @@ const Layout: FC<MenuProps> = ({ pagename }) => {
               Characters
             </Link>
           </div>
-          <div className="nav-link">
-            <Link
-              to="/user"
-              className={pagename === 'user' ? 'nav-link selected-nav-link' : 'nav-link'}
-            >
-              User Info
-            </Link>
-          </div>
+          {currentUser && (
+            <div className="nav-link">
+              <Link
+                to="/user"
+                className={pagename === 'user' ? 'nav-link selected-nav-link' : 'nav-link'}
+              >
+                User Info
+              </Link>
+            </div>
+          )}
         </Box>
       </nav>
       <Box className="sign-in">
@@ -57,10 +77,10 @@ const Layout: FC<MenuProps> = ({ pagename }) => {
           Register
         </Button>
       </Box>
-      <SignUp open={signUpOpen} handleSignUpOpen={handleSignUpOpen} />
-      <SignIn open={signInOpen} handleSignInOpen={handleSignInOpen} />
+      <SignUp open={signUpOpen} handleSignUpOpen={handleSignUpOpen} submitSignUp={submitSignUp} />
+      <SignIn open={signInOpen} handleSignInOpen={handleSignInOpen} submitSignIn={submitSignIn} />
     </AppBar>
   );
 };
 
-export default Layout;
+export default Menu;
