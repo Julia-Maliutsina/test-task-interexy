@@ -1,5 +1,12 @@
 import React, { FC } from 'react';
-import { Dialog, DialogTitle, DialogContent, Button } from '@mui/material';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Button,
+  FormControlLabel,
+  Checkbox,
+} from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { validateSignUp } from 'utils/validation';
@@ -12,9 +19,17 @@ interface ISignUpProps {
   open: boolean;
   handleSignUpOpen: (isOpen: boolean) => void;
   submitSignUp: (values: IRegister) => void;
+  rememberUserChecked: boolean;
+  handleRememberUser: () => void;
 }
 
-const SignUp: FC<ISignUpProps> = ({ open, handleSignUpOpen, submitSignUp }) => (
+const SignUp: FC<ISignUpProps> = ({
+  open,
+  handleSignUpOpen,
+  submitSignUp,
+  rememberUserChecked,
+  handleRememberUser,
+}) => (
   <Dialog open={open} onClose={() => handleSignUpOpen(false)}>
     <DialogTitle className="dialog-title">Sign Up</DialogTitle>
     <DialogContent className="dialog-content">
@@ -83,6 +98,11 @@ const SignUp: FC<ISignUpProps> = ({ open, handleSignUpOpen, submitSignUp }) => (
           <Button className="dialog-submit" type="submit">
             Sign Up
           </Button>
+          <FormControlLabel
+            className="remember-user"
+            control={<Checkbox checked={rememberUserChecked} onChange={handleRememberUser} />}
+            label="Remember me"
+          />
         </Form>
       </Formik>
     </DialogContent>

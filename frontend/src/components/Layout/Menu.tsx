@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 
-import { authorizeUser, registerUser } from 'store/authSlice';
+import { authorizeUser, registerUser, signOut } from 'store/authSlice';
 import { RootState, useAppDispatch } from 'store/store';
 import { SignUp, SignIn } from 'components/Dialogs';
 import { IAuth, IRegister } from 'interfaces/User';
@@ -18,27 +18,42 @@ interface MenuProps {
 const Menu: FC<MenuProps> = ({ pagename }) => {
   const [signInOpen, setSignInOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
+  const [rememberUserChecked, setRememberChecked] = useState(false);
 
   const { currentUser } = useSelector((state: RootState) => state.authReducer);
+
+  let isAuth = window.sessionStorage.getItem('token') || window.localStorage.getItem('token');
 
   const dispatch = useAppDispatch();
 
   const handleSignInOpen = (isOpen: boolean) => {
     setSignInOpen(isOpen);
+    setRememberChecked(false);
   };
 
   const handleSignUpOpen = (isOpen: boolean) => {
     setSignUpOpen(isOpen);
+    setRememberChecked(false);
+  };
+
+  const handleRememberUser = () => {
+    setRememberChecked(!rememberUserChecked);
   };
 
   const submitSignIn = (values: IAuth) => {
-    dispatch(authorizeUser(values));
+    const signInArguments = { ...values, rememberUser: rememberUserChecked };
+    dispatch(authorizeUser(signInArguments));
     handleSignInOpen(false);
   };
 
   const submitSignUp = (values: IRegister) => {
-    dispatch(registerUser(values));
+    const signUpArguments = { ...values, rememberUser: rememberUserChecked };
+    dispatch(registerUser(signUpArguments));
     handleSignUpOpen(false);
+  };
+
+  const handleSignOut = () => {
+    dispatch(signOut());
   };
 
   return (
@@ -53,7 +68,7 @@ const Menu: FC<MenuProps> = ({ pagename }) => {
               Characters
             </Link>
           </div>
-          {currentUser && (
+          {isAuth && (
             <div className="nav-link">
               <Link
                 to="/user"
@@ -66,19 +81,39 @@ const Menu: FC<MenuProps> = ({ pagename }) => {
         </Box>
       </nav>
       <Box className="sign-in">
-        <Button
-          className="sign-in-button"
-          variant="outlined"
-          onClick={() => handleSignInOpen(true)}
-        >
-          Sign in
-        </Button>
-        <Button className="sign-up-button" onClick={() => handleSignUpOpen(true)}>
-          Register
-        </Button>
+        {isAuth ? (
+          <Button className="sign-out-button" variant="outlined" onClick={handleSignOut}>
+            Sign out
+          </Button>
+        ) : (
+          <>
+            <Button
+              className="sign-in-button"
+              variant="outlined"
+              onClick={() => handleSignInOpen(true)}
+            >
+              Sign in
+            </Button>
+            <Button className="sign-up-button" onClick={() => handleSignUpOpen(true)}>
+              Register
+            </Button>
+          </>
+        )}
       </Box>
-      <SignUp open={signUpOpen} handleSignUpOpen={handleSignUpOpen} submitSignUp={submitSignUp} />
-      <SignIn open={signInOpen} handleSignInOpen={handleSignInOpen} submitSignIn={submitSignIn} />
+      <SignUp
+        open={signUpOpen}
+        handleSignUpOpen={handleSignUpOpen}
+        submitSignUp={submitSignUp}
+        rememberUserChecked={rememberUserChecked}
+        handleRememberUser={handleRememberUser}
+      />
+      <SignIn
+        open={signInOpen}
+        handleSignInOpen={handleSignInOpen}
+        submitSignIn={submitSignIn}
+        rememberUserChecked={rememberUserChecked}
+        handleRememberUser={handleRememberUser}
+      />
     </AppBar>
   );
 };

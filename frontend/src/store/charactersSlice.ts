@@ -8,21 +8,28 @@ export interface CounterState {
   incrementAmount: number;
 }
 
-const emptyCharacter = {} as ICharacter;
+const caracters_api = process.env.RICK_AND_MORTY_ENDPOINT;
 
 export const fetchAllCharacters = createAsyncThunk(
   'characters/fetchAll',
   async (page: Number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page || 1}`);
+      const response = await fetch(`${caracters_api}?page=${page || 1}`);
       if (response.ok) {
         return response.json();
       } else {
-        return rejectWithValue('No caracters found');
+        const status = await response.status;
+        const message = await response.json();
+        const reject = { status, message };
+        return rejectWithValue(reject);
       }
     } catch (e) {
       const message = <{ message: string }>e;
-      return rejectWithValue(message);
+      const reject = {
+        message: { error: message },
+        status: 500,
+      };
+      return rejectWithValue(reject);
     }
   },
 );
@@ -31,15 +38,22 @@ export const fetchOneCharacter = createAsyncThunk(
   'characters/fetchOne',
   async (characterId: String, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/character/${characterId}`);
+      const response = await fetch(`${caracters_api}/${characterId}`);
       if (response.ok) {
         return response.json();
       } else {
-        return rejectWithValue('No caracters found');
+        const status = await response.status;
+        const message = await response.json();
+        const reject = { status, message };
+        return rejectWithValue(reject);
       }
     } catch (e) {
       const message = <{ message: string }>e;
-      return rejectWithValue(message);
+      const reject = {
+        message: { error: message },
+        status: 500,
+      };
+      return rejectWithValue(reject);
     }
   },
 );
@@ -49,8 +63,12 @@ export const charactersSlice = createSlice({
   initialState: {
     characters: [] as ICharacter[],
     pages: 0,
-    character: emptyCharacter,
+    character: {} as ICharacter,
     isLoading: false,
+    error: {
+      status: null,
+      message: '',
+    },
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -63,8 +81,10 @@ export const charactersSlice = createSlice({
         state.characters = action.payload.results;
         state.pages = action.payload.info.pages;
       })
-      .addCase(fetchAllCharacters.rejected, (state: any) => {
+      .addCase(fetchAllCharacters.rejected, (state: any, action: any) => {
         state.isLoading = false;
+        state.error.message = action.payload.message.error;
+        state.error.status = action.payload.status;
       })
       .addCase(fetchOneCharacter.pending, (state: any) => {
         state.isLoading = true;
@@ -73,9 +93,11 @@ export const charactersSlice = createSlice({
         state.isLoading = false;
         state.character = action.payload;
       })
-      .addCase(fetchOneCharacter.rejected, (state: any) => {
+      .addCase(fetchOneCharacter.rejected, (state: any, action: any) => {
         state.isLoading = false;
-        state.character = emptyCharacter;
+        state.character = {} as ICharacter;
+        state.error.message = action.payload.message.error;
+        state.error.status = action.payload.status;
       });
   },
 });

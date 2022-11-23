@@ -1,0 +1,17 @@
+.error {
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: var(--focus-color);
+
+  .error-status {
+    font-family: 'Kanit-SemiBold', sans-serif;
+    font-size: 40px;
+  }
+  .error-message {
+    font-family: 'Kanit', sans-serif;
+    font-size: 34px;
+  }
+}

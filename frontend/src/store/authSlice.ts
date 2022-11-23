@@ -1,21 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import store from './store';
 import { IRegister, IAuth } from 'interfaces/User';
+
+const user_api = process.env.LOCAL_USERS_ENDPOINT;
 
 export const authorizeUser = createAsyncThunk(
   'auth/signin',
   async (params: IAuth, { rejectWithValue }) => {
     try {
-      const requestBody = JSON.stringify(params);
-      const response = await fetch(`http://localhost:4000/signin`, {
+      const requestBody = { email: params.email, password: params.password };
+      const response = await fetch(`${user_api}/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: requestBody,
+        body: JSON.stringify(requestBody),
       });
       if (response.ok) {
+        if (params.rememberUser) {
+          const responseData = await response.json();
+          window.localStorage.setItem('token', responseData.token);
+        }
         return response.json();
       } else {
         return rejectWithValue('User not found');
@@ -40,7 +45,7 @@ export const registerUser = createAsyncThunk(
         gender: params.gender,
         password: params.password,
       });
-      const response = await fetch(`http://localhost:4000/signup`, {
+      const response = await fetch(`${user_api}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,6 +53,10 @@ export const registerUser = createAsyncThunk(
         body: requestBody,
       });
       if (response.ok) {
+        if (params.rememberUser) {
+          const responseData = await response.json();
+          window.localStorage.setItem('token', responseData.token);
+        }
         return response.json();
       } else {
         return rejectWithValue('Registration failed');
@@ -65,7 +74,16 @@ export const authSlice = createSlice({
     accessToken: '',
     currentUser: '',
   },
-  reducers: {},
+  reducers: {
+    signOut: (state) => {
+      state.currentUser = '';
+      state.accessToken = '';
+      window.sessionStorage.clear();
+      window.localStorage.clear();
+      // eslint-disable-next-line no-restricted-globals
+      location.reload();
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(authorizeUser.pending, () => {})
@@ -91,6 +109,6 @@ export const authSlice = createSlice({
   },
 });
 
+export const { signOut } = authSlice.actions;
 const authReducer = authSlice.reducer;
-
 export default authReducer;

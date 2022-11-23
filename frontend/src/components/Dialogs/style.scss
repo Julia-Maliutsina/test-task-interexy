@@ -74,4 +74,15 @@
       top: 24px;
     }
   }
+
+  .remember-user {
+    &.MuiFormControlLabel-root {
+      font-family: 'Kanit-ExtraLight', sans-serif;
+      font-size: 16px;
+      color: var(--secondary-text-color);
+      position: absolute;
+      right: 10px;
+      bottom: 15px;
+    }
+  }
 }

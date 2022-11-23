@@ -6,8 +6,10 @@ import Layout from 'components/Layout';
 import Loader from 'components/Loader';
 import { ICharacter } from 'interfaces/Character';
 import { CharacterCard } from 'components/Characters';
+import { IError } from 'interfaces/Error';
 
 import './style.scss';
+import Error from 'components/Error';
 
 interface ICharactersProps {
   characters: ICharacter[];
@@ -15,6 +17,7 @@ interface ICharactersProps {
   page: number;
   fetchNextPage: (event: React.ChangeEvent<unknown>, value: number) => void;
   isLoading?: Boolean;
+  error?: IError;
 }
 
 const CharactersPage: FC<ICharactersProps> = ({
@@ -23,8 +26,10 @@ const CharactersPage: FC<ICharactersProps> = ({
   page,
   fetchNextPage,
   isLoading,
+  error,
 }) => (
   <Layout pagename="characters">
+    {error?.status && <Error message={error.message} status={error.status} />}
     {isLoading ? (
       <Loader />
     ) : (

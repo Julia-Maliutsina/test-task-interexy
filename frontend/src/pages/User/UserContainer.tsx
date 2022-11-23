@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { redirect } from 'react-router-dom';
 
 import { fetchUserInfo } from 'store/userSlice';
 import { RootState, useAppDispatch } from 'store/store';
@@ -8,14 +8,16 @@ import { RootState, useAppDispatch } from 'store/store';
 import UserPage from './User';
 
 const UserContainer: FC = () => {
-  const { isLoading, user } = useSelector((state: RootState) => state.userReducer);
+  const { isLoading, user, error } = useSelector((state: RootState) => state.userReducer);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchUserInfo());
   }, [dispatch]);
-
-  return <UserPage user={user} isLoading={isLoading} />;
+  if (error) {
+    redirect('/login');
+  }
+  return <UserPage user={user} isLoading={isLoading} error={error} />;
 };
 
 export default UserContainer;

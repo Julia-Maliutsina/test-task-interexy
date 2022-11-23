@@ -17,6 +17,7 @@ const App: FC = () => (
           <Route path=":characterId" element={<CharacterPage />} />
         </Route>
         <Route path="/user" element={<UserPage />} />
+        <Route path="*" element={<Navigate replace to="/characters" />} />
       </Routes>
     </BrowserRouter>
   </ReduxStoreProvider>
