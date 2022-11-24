@@ -14,9 +14,7 @@ const validateSignUp = (values: IRegister) => {
   let errors = {} as IErrors;
   if (!values.email) {
     errors.email = '*Required';
-  } else if (
-    !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/i.test(values.email)
-  ) {
+  } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)) {
     errors.email = '*Invalid email format';
   }
   if (!values.name) {
@@ -52,6 +50,8 @@ const validateSignIn = (values: IAuth) => {
   let errors = {} as IErrors;
   if (!values.email) {
     errors.email = '*Required';
+  } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)) {
+    errors.email = '*Invalid email format';
   }
   if (!values.password) {
     errors.password = '*Required';
@@ -60,7 +60,5 @@ const validateSignIn = (values: IAuth) => {
   }
   return errors;
 };
-
-export default validateSignIn;
 
 export { validateSignUp, validateSignIn };

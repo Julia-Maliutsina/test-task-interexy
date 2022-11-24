@@ -2,12 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IUser } from 'interfaces/User';
 
+const LOCAL_USER_ENDPOINT = 'http://localhost:4000';
+
 export const fetchUserInfo = createAsyncThunk(
   'user/getUserInfo',
   async (params: undefined, { rejectWithValue }) => {
     try {
       const token = window.sessionStorage.getItem('token') || window.localStorage.getItem('token');
-      const response = await fetch(`http://localhost:4000/user`, {
+      const response = await fetch(`${LOCAL_USER_ENDPOINT}/user`, {
         headers: { Authorization: 'Bearer ' + token },
       });
       if (response.ok) {

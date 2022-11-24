@@ -2,26 +2,25 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IRegister, IAuth } from 'interfaces/User';
 
+const LOCAL_AUTH_ENDPOINT = 'http://localhost:4000';
+
 export const authorizeUser = createAsyncThunk(
   'auth/signin',
   async (params: IAuth, { rejectWithValue }) => {
     try {
-      const requestBody = { email: params.email, password: params.password };
-      const response = await fetch(`http://localhost:4000/signin`, {
+      const requestBody = JSON.stringify(params);
+      const response = await fetch(`${LOCAL_AUTH_ENDPOINT}/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestBody),
+        body: requestBody,
       });
       if (response.ok) {
-        if (params.rememberUser) {
-          const responseData = await response.json();
-          window.localStorage.setItem('token', responseData.token);
-        }
         return response.json();
       } else {
-        return rejectWithValue('User not found');
+        const responseError = await response.json();
+        return rejectWithValue(responseError.message);
       }
     } catch (e) {
       const message = <{ message: string }>e;
@@ -43,7 +42,7 @@ export const registerUser = createAsyncThunk(
         gender: params.gender,
         password: params.password,
       });
-      const response = await fetch(`http://localhost:4000/signup`, {
+      const response = await fetch(`${LOCAL_AUTH_ENDPOINT}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,13 +50,10 @@ export const registerUser = createAsyncThunk(
         body: requestBody,
       });
       if (response.ok) {
-        if (params.rememberUser) {
-          const responseData = await response.json();
-          window.localStorage.setItem('token', responseData.token);
-        }
         return response.json();
       } else {
-        return rejectWithValue('Registration failed');
+        const responseError = await response.json();
+        return rejectWithValue(responseError.message);
       }
     } catch (e) {
       const message = <{ message: string }>e;
@@ -71,11 +67,15 @@ export const authSlice = createSlice({
   initialState: {
     accessToken: '',
     currentUser: '',
+    successMessage: '',
+    errorMessage: '',
   },
   reducers: {
     signOut: (state) => {
       state.currentUser = '';
       state.accessToken = '';
+      state.errorMessage = '';
+      state.successMessage = '';
       window.sessionStorage.clear();
       window.localStorage.clear();
       // eslint-disable-next-line no-restricted-globals
@@ -86,23 +86,29 @@ export const authSlice = createSlice({
     builder
       .addCase(authorizeUser.pending, () => {})
       .addCase(authorizeUser.fulfilled, (state: any, action: any) => {
+        state.errorMessage = '';
         state.currentUser = action.payload.user.id;
         state.accessToken = action.payload.token;
-        window.sessionStorage.setItem('token', action.payload.token);
+        state.successMessage = 'Signed in successfully';
       })
       .addCase(authorizeUser.rejected, (state: any) => {
+        state.successMessage = '';
         state.currentUser = {};
         state.accessToken = '';
+        state.errorMessage = 'User not found';
       })
       .addCase(registerUser.pending, () => {})
       .addCase(registerUser.fulfilled, (state: any, action: any) => {
+        state.errorMessage = '';
         state.currentUser = action.payload.user.id;
         state.accessToken = action.payload.token;
-        window.sessionStorage.setItem('token', action.payload.token);
+        state.successMessage = 'Signed up successfully';
       })
       .addCase(registerUser.rejected, (state: any) => {
+        state.successMessage = '';
         state.currentUser = {};
         state.accessToken = '';
+        state.errorMessage = 'Registration failed';
       });
   },
 });

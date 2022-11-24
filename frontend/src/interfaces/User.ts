@@ -7,13 +7,11 @@ export interface IRegister {
   birth: string;
   gender: string;
   location: string;
-  rememberUser?: boolean;
 }
 
 export interface IAuth {
   email: string;
   password: string;
-  rememberUser?: boolean;
 }
 
 export interface IUser {

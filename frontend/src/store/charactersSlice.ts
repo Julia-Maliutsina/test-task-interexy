@@ -1,18 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ICharacter } from 'interfaces/Character';
-import store from './store';
 
-export interface CounterState {
-  value: number;
-  incrementAmount: number;
-}
+const RICK_AND_MORTY_ENDPOINT = 'https://rickandmortyapi.com/api/character';
 
 export const fetchAllCharacters = createAsyncThunk(
   'characters/fetchAll',
   async (page: Number, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page || 1}`);
+      const response = await fetch(`${RICK_AND_MORTY_ENDPOINT}?page=${page || 1}`);
       if (response.ok) {
         return response.json();
       } else {
@@ -36,7 +32,7 @@ export const fetchOneCharacter = createAsyncThunk(
   'characters/fetchOne',
   async (characterId: String, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/character/${characterId}`);
+      const response = await fetch(`${RICK_AND_MORTY_ENDPOINT}/${characterId}`);
       if (response.ok) {
         return response.json();
       } else {

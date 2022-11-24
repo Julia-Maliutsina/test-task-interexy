@@ -1,8 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { AppBar, Box, Button, Snackbar, Alert } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { authorizeUser, registerUser, signOut } from 'store/authSlice';
@@ -19,10 +17,13 @@ const Menu: FC<MenuProps> = ({ pagename }) => {
   const [signInOpen, setSignInOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [rememberUserChecked, setRememberChecked] = useState(false);
+  const [hideSnackbar, setHideSnackbar] = useState(true);
 
-  const { currentUser } = useSelector((state: RootState) => state.authReducer);
+  const { errorMessage, successMessage, accessToken } = useSelector(
+    (state: RootState) => state.authReducer,
+  );
 
-  let isAuth = window.sessionStorage.getItem('token') || window.localStorage.getItem('token');
+  let isAuth = accessToken;
 
   const dispatch = useAppDispatch();
 
@@ -41,20 +42,32 @@ const Menu: FC<MenuProps> = ({ pagename }) => {
   };
 
   const submitSignIn = (values: IAuth) => {
-    const signInArguments = { ...values, rememberUser: rememberUserChecked };
-    dispatch(authorizeUser(signInArguments));
+    dispatch(authorizeUser(values));
     handleSignInOpen(false);
+    setHideSnackbar(false);
+    setTimeout(() => {
+      setHideSnackbar(true);
+    }, 3000);
   };
 
   const submitSignUp = (values: IRegister) => {
-    const signUpArguments = { ...values, rememberUser: rememberUserChecked };
-    dispatch(registerUser(signUpArguments));
+    dispatch(registerUser(values));
     handleSignUpOpen(false);
+    setHideSnackbar(false);
+    setTimeout(() => {
+      setHideSnackbar(true);
+    }, 3000);
   };
 
   const handleSignOut = () => {
     dispatch(signOut());
   };
+
+  if (rememberUserChecked && accessToken) {
+    window.localStorage.setItem('token', accessToken);
+  } else if (accessToken) {
+    window.sessionStorage.setItem('token', accessToken);
+  }
 
   return (
     <AppBar position="static">
@@ -114,6 +127,14 @@ const Menu: FC<MenuProps> = ({ pagename }) => {
         rememberUserChecked={rememberUserChecked}
         handleRememberUser={handleRememberUser}
       />
+      <Snackbar
+        open={(errorMessage || successMessage) && !hideSnackbar ? true : false}
+        autoHideDuration={4000}
+      >
+        <Alert severity={successMessage ? 'success' : 'error'} sx={{ width: '100%' }}>
+          {successMessage || errorMessage}
+        </Alert>
+      </Snackbar>
     </AppBar>
   );
 };
