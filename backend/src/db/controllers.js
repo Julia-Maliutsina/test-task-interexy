@@ -8,8 +8,7 @@ export const getUser = async (request, response) => {
     if (signin.status === 'error') {
       return response.status(400).send({ message: signin.message });
     }
-    response.status(200).send({ token: signin.accessToken, user: signin.userInfo });
-    return;
+    return response.status(200).send({ token: signin.accessToken, user: signin.userInfo });
   } catch (e) {
     return response.status(500).send({ message: 'Server error' });
   }

@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { IRegister, IAuth } from 'interfaces/User';
 
-const LOCAL_AUTH_ENDPOINT = 'http://localhost:4000';
+import { IRegister, IAuth } from 'interfaces/User';
+import { LOCAL_AUTH_ENDPOINT } from 'constants/endpoint';
 
 export const authorizeUser = createAsyncThunk(
   'auth/signin',

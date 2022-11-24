@@ -9,11 +9,11 @@ import { SignUp, SignIn } from 'components/Dialogs';
 import { IAuth, IRegister } from 'interfaces/User';
 
 interface MenuProps {
-  pagename: string;
+  pageName: string;
   children?: React.ReactNode;
 }
 
-const Menu: FC<MenuProps> = ({ pagename }) => {
+const Menu: FC<MenuProps> = ({ pageName }) => {
   const [signInOpen, setSignInOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [rememberUserChecked, setRememberChecked] = useState(false);
@@ -76,7 +76,7 @@ const Menu: FC<MenuProps> = ({ pagename }) => {
           <div className="nav-link">
             <Link
               to="/characters"
-              className={pagename === 'characters' ? 'nav-link selected-nav-link' : 'nav-link'}
+              className={pageName === 'characters' ? 'nav-link selected-nav-link' : 'nav-link'}
             >
               Characters
             </Link>
@@ -85,7 +85,7 @@ const Menu: FC<MenuProps> = ({ pagename }) => {
             <div className="nav-link">
               <Link
                 to="/user"
-                className={pagename === 'user' ? 'nav-link selected-nav-link' : 'nav-link'}
+                className={pageName === 'user' ? 'nav-link selected-nav-link' : 'nav-link'}
               >
                 User Info
               </Link>
@@ -128,7 +128,7 @@ const Menu: FC<MenuProps> = ({ pagename }) => {
         handleRememberUser={handleRememberUser}
       />
       <Snackbar
-        open={(errorMessage || successMessage) && !hideSnackbar ? true : false}
+        open={!!((errorMessage || successMessage) && !hideSnackbar)}
         autoHideDuration={4000}
       >
         <Alert severity={successMessage ? 'success' : 'error'} sx={{ width: '100%' }}>

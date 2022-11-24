@@ -13,7 +13,7 @@ interface ICharacterProps {
 
 const CharacterPage: FC<ICharacterProps> = ({ character, isLoading }) => {
   return (
-    <Layout pagename="character">
+    <Layout pageName="character">
       {isLoading ? (
         <Loader />
       ) : (

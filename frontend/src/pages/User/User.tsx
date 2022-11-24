@@ -15,7 +15,7 @@ interface IUserProps {
 }
 
 const CharacterPage: FC<IUserProps> = ({ user, isLoading, error }) => (
-  <Layout pagename="user">
+  <Layout pageName="user">
     {error?.status ? (
       <Error message={`${error.message}`} status={error.status} />
     ) : isLoading ? (

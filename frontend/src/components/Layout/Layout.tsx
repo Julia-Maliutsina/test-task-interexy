@@ -6,13 +6,13 @@ import Menu from './Menu';
 import './style.scss';
 
 interface LayoutProps {
-  pagename: string;
+  pageName: string;
   children?: React.ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ pagename, children }) => (
+const Layout: FC<LayoutProps> = ({ pageName, children }) => (
   <div>
-    <Menu pagename={pagename} />
+    <Menu pageName={pageName} />
     <Box className="page-content">{children}</Box>
   </div>
 );

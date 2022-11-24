@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { IUser } from 'interfaces/User';
 
-const LOCAL_USER_ENDPOINT = 'http://localhost:4000';
+import { IUser } from 'interfaces/User';
+import { LOCAL_AUTH_ENDPOINT } from 'constants/endpoint';
 
 export const fetchUserInfo = createAsyncThunk(
   'user/getUserInfo',
   async (params: undefined, { rejectWithValue }) => {
     try {
       const token = window.sessionStorage.getItem('token') || window.localStorage.getItem('token');
-      const response = await fetch(`${LOCAL_USER_ENDPOINT}/user`, {
+      const response = await fetch(`${LOCAL_AUTH_ENDPOINT}/user`, {
         headers: { Authorization: 'Bearer ' + token },
       });
       if (response.ok) {
@@ -50,6 +50,8 @@ export const userSlice = createSlice({
       .addCase(fetchUserInfo.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
         state.user = action.payload.user;
+        const dateObj = new Date(action.payload.user.createdAt);
+        state.user.createdAt = `${dateObj.getMonth()}/${dateObj.getDay()}/${dateObj.getFullYear()}`;
       })
       .addCase(fetchUserInfo.rejected, (state: any, action: any) => {
         state.isLoading = false;

@@ -1,20 +1,20 @@
 export interface ICharacter {
-  id: Number;
-  name: String;
-  status: String;
-  species: String;
+  id: number;
+  name: string;
+  status: string;
+  species: string;
   origin: {
-    name: String;
-    url: String;
+    name: string;
+    url: string;
   };
   location: {
-    name: String;
-    url: String;
+    name: string;
+    url: string;
   };
   episode?: Array<string>;
-  url?: String;
-  type?: String;
-  gender?: String;
-  image?: String;
+  url?: string;
+  type?: string;
+  gender?: string;
+  image?: string;
   created?: Date;
 }

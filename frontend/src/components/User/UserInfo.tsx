@@ -28,7 +28,7 @@ const UserInfo: FC<IUser> = ({ id, name, surname, email, birth, gender, location
     </Box>
     <Box className="info-wrapper">
       <Typography className="title">Date of registration:</Typography>
-      <Typography className="info">{`${createdAt}`.slice(0, 10)}</Typography>
+      <Typography className="info">{`${createdAt}`}</Typography>
     </Box>
   </Box>
 );

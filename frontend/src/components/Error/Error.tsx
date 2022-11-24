@@ -5,11 +5,11 @@ import { IError } from 'interfaces/Error';
 
 import './style.scss';
 
-const Loader: FC<IError> = ({ status, message }) => (
+const Error: FC<IError> = ({ status, message }) => (
   <Box className="error">
     <Typography className="error-status">{`${status}`}</Typography>
     <Typography className="error-message">{message}</Typography>
   </Box>
 );
 
-export default Loader;
+export default Error;

@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ICharacter } from 'interfaces/Character';
 
-const RICK_AND_MORTY_ENDPOINT = 'https://rickandmortyapi.com/api/character';
+import { ICharacter } from 'interfaces/Character';
+import { RICK_AND_MORTY_ENDPOINT } from 'constants/endpoint';
 
 export const fetchAllCharacters = createAsyncThunk(
   'characters/fetchAll',
@@ -12,7 +12,7 @@ export const fetchAllCharacters = createAsyncThunk(
       if (response.ok) {
         return response.json();
       } else {
-        const status = await response.status;
+        const status = response.status;
         const message = await response.json();
         const reject = { status, message };
         return rejectWithValue(reject);
@@ -36,7 +36,7 @@ export const fetchOneCharacter = createAsyncThunk(
       if (response.ok) {
         return response.json();
       } else {
-        const status = await response.status;
+        const status = response.status;
         const message = await response.json();
         const reject = { status, message };
         return rejectWithValue(reject);
