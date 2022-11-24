@@ -33,6 +33,8 @@ export const registerUser = createAsyncThunk(
   'auth/signup',
   async (params: IRegister, { rejectWithValue }) => {
     try {
+      const dateObj = new Date(params.birth);
+      params.birth = `${dateObj.getMonth()}/${dateObj.getDay()}/${dateObj.getFullYear()}`;
       const requestBody = JSON.stringify({
         name: params.name,
         surname: params.surname,

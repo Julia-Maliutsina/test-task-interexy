@@ -4,4 +4,4 @@ localhost:4000.
 
 You can use the following registered user's data to test sign in functionality:
 
-email: julia@test.ts | password: 123qwe123
+email: user@gmail.com | password: 123qwe123
